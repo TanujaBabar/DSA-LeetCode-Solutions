@@ -1,0 +1,43 @@
+class Solution {
+    public boolean halvesAreAlike(String s) {
+        String vowels = "aeiouAEIOU";
+        int n = s.length();
+        int cnt1 = 0;
+        int cnt2 = 0;
+        for(int i=0;i<n/2;i++){
+            if(vowels.indexOf(s.charAt(i)) == -1){
+                continue;
+            }
+            cnt1++;
+        }
+        for(int i=n/2;i<n;i++){
+            if(vowels.indexOf(s.charAt(i)) == -1){
+                continue;
+            }
+            cnt2++;
+        }
+        return cnt1 == cnt2; 
+        //if(cnt1 == 0) return true;
+        //else return false; 
+    }
+}
+
+
+
+class Solution {
+    public String reverseWords(String s) {
+        char[] arr = s.toCharArray();
+        int start = 0;
+        int end = s.length() - 1;
+
+        while(start < end){
+            char temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+
+        return new String(arr);
+    }
+}
