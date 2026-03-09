@@ -1,0 +1,20 @@
+class Solution {
+    public boolean checkString(String s) {
+        int firstoccuranceB = -1;
+        boolean ans = true;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)=='b'){
+                firstoccuranceB=i;
+                break;
+            }    
+        }
+        if(firstoccuranceB == -1) return true; // no 'b'
+        for(int i=firstoccuranceB+1;i<s.length();i++){
+            if(s.charAt(i)=='a'){
+                ans = false;
+            }
+            
+        }
+        return ans;
+    }
+}
