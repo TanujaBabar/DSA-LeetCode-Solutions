@@ -1,0 +1,45 @@
+class Solution {
+    public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
+        /*StringBuilder sb1 = new StringBuilder(); 
+        for(int i=0;i<word1.length;i++){
+            sb1.append(word1[i]);
+        }
+        StringBuilder sb2 = new StringBuilder(); 
+        for(int i=0;i<word2.length;i++){
+            sb2.append(word2[i]);
+        }
+        String s = sb1.toString();
+        String t = sb2.toString();
+
+        if(s.equals(t)){
+            return true;
+        }else{
+            return false;
+        } */
+
+
+
+        int w1=0,w2=0; //word in arr
+        int p1=0,p2=0; // char in word
+        while(w1<word1.length && w2<word2.length){
+            if(word1[w1].charAt(p1) != word2[w2].charAt(p2)){
+                return false;
+            }
+            p1++;
+            p2++;
+            if(p1 == word1[w1].length()){  // word is ended now we have to move to the next word 
+                w1++;
+                p1=0; // set to 0 idx of new word
+            }
+            if(p2 == word2[w2].length()){
+                w2++;
+                p2=0;
+            }
+
+        }
+        if(w1 == word1.length && w2 == word2.length){
+            return true;
+        }
+        return false;
+    }
+}
