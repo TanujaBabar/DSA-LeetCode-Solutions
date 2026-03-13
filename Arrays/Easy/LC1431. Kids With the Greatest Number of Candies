@@ -1,0 +1,42 @@
+class Solution {
+    public List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
+        int n = candies.length;
+// BRUTFORCE
+        /* List<Boolean> arr = new ArrayList<>();
+        for(int i=0;i<n;i++){
+            int num = candies[i]+ extraCandies;
+            int max = -1;
+            for(int j=0;j<n;j++){
+                if(num<candies[j]){
+                   max = candies[j];
+                }
+            } 
+            if(max>num){
+                arr.add(false);
+            }
+            else{
+                arr.add(true);
+            }
+
+        }
+        */
+// OPTIMAL        
+        int count = 0;
+        int maxi = -1;
+        List<Boolean> arr = new ArrayList<>();
+        for(int i=0;i<n;i++){
+            if(candies[i]>maxi){
+                maxi = candies[i];
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(candies[i]+extraCandies >= maxi){
+                 arr.add(true);
+            }
+            else{
+                arr.add(false);
+            }
+        }
+        return arr;
+    }
+}
