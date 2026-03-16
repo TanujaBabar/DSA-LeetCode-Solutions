@@ -1,0 +1,37 @@
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        return getSubsets(nums, 0);
+        
+    }
+     
+    public List<List<Integer>> getSubsets(int[] nums, int idx){
+        if(idx == nums.length){
+            List<List<Integer>> base = new ArrayList<>();
+            base.add(new ArrayList<>());
+            return base;
+        }
+        // base case
+        int fc = nums[idx];  // first element
+
+        List<List<Integer>> sans = getSubsets(nums, idx + 1);
+
+        List<List<Integer>> ans = new ArrayList<>();
+
+        // copy sans
+        for(int i = 0; i < sans.size(); i++){
+            List<Integer> subset1 = new ArrayList<>(sans.get(i));
+            ans.add(subset1);
+            List<Integer> subset2 = new ArrayList<>(sans.get(i));
+            subset2.add(0, fc);
+            ans.add(subset2);
+        }
+
+        // add first element
+        /*for(int i = 0; i < sans.size(); i++){
+            List<Integer> subset = new ArrayList<>(sans.get(i));
+            subset.add(0, fc);
+            ans.add(subset);
+        }*/
+        return ans;
+    }
+}
