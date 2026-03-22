@@ -1,0 +1,85 @@
+//APPROACH 1 =============
+// INPLACE => obtain transpose of matrix then reverse each row
+
+class Solution {
+public:
+   /* void transpose(int matrix,int n){
+// Step 1: Transpose =>approach 1 
+            for(int i=0;i<n;i++){
+                    for(int j=i+1;j<n;j++){
+                        int temp = matrix[i][j];
+                        matrix[i][j]=matrix[j][i];
+                        matrix[j][i] = temp;
+                    
+                }
+            }
+        }
+        
+     */
+// Step 1: Transpose =>approach 2
+     void transpose(vector<vector<int>>& matrix, int n) {
+        for(int i = 0; i < n; i++) {
+            for(int j = i + 1; j < n; j++) {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+    }
+
+
+void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+
+        transpose(matrix,n);
+        for(int i=0;i<n;i++){
+            //row of i idx
+            int start=0;
+            int end=n-1;
+            while(start<end){
+            int temp = matrix[i][start];
+            matrix[i][start]=matrix[i][end];
+            matrix[i][end]=temp;
+            start++;
+            end--; 
+            }
+            
+        }
+
+    }
+};
+
+//APPROACH 2 =============
+
+// USING EXTRA MATRIX
+
+//create extra arr , take 1st([i][j]) row of old matrix and put it in last([j][n-i-1]) col of new matrix
+
+int [][] res = new int[n][m];
+ for(int i = 0; i < n; i++) {
+      for(int j = i + 1; j < n; j++) {
+         res[j][n-i-1] = matrix[i][j];
+      }
+ }
+
+return res;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
