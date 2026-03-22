@@ -1,0 +1,18 @@
+//WHIOUT USING RECURSION===================================
+
+class Solution {
+    public int findTheWinner(int n, int k) {
+        ArrayList<Integer> al = new ArrayList<>();
+        for(int i=1;i<=n;i++){
+            al.add(i);
+        }
+        k--;
+        int idx = 0;
+        while(al.size()>1){
+            int persontokill = (idx+k)%al.size();
+            al.remove(persontokill);
+            idx = persontokill;
+        }
+        return al.get(0);
+    }
+}
