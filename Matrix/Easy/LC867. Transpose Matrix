@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> transpose(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+// Step 1: Transpose => approach 1
+        vector<vector<int>> ans(m,vector<int>(n));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                ans[i][j]=matrix[j][i];
+            }
+        }
+        return ans;
+    }
+};
+
+// Step 1: Transpose => approach 2  
+// travel upper triangle of matrix and swap with lower tria. and vise versa. 
+// for upper triangle = j>i 
+// for lower triangle = i>j 
+// for diagonal = j==i 
+        for(int i = 0; i < n; i++){
+            for(int j = i; j < n; j++){
+                int temp = mat[i][j];
+                mat[i][j] = mat[j][i];
+                mat[j][i] = temp;
+            }
+        }
