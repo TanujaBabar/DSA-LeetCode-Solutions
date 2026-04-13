@@ -410,7 +410,7 @@ class Questions {
         return false;
     }
 
-    // starting point of cycle in linkedList -> https://www.geeksforgeeks.org/problems/find-the-first-node-of-loop-in-linked-list--170645/1
+    // LC = 142 starting point of cycle in linkedList -> https://www.geeksforgeeks.org/problems/find-the-first-node-of-loop-in-linked-list--170645/1
     public static Node findFirstNode(Node head) {
         if(head == null || head.next==null){
             return null;
@@ -439,6 +439,38 @@ class Questions {
         }
 
         return slow;
+    }
+
+
+//Remove loop in LL
+ public Node removeLoop(Node head) {
+        //Write Your Code Here...
+        Node sp = head;
+        Node fp = head;
+        
+        while(fp != null && fp.next != null){
+            sp=sp.next;
+            fp=fp.next.next;
+            if(sp == fp){
+                break;
+            }
+        }
+        if(fp==null && fp.next==null){
+            return head;
+        }
+        
+       sp = head;
+       while(sp!=fp){
+           sp=sp.next;
+           fp=fp.next;
+       }
+       
+      Node temp = sp;
+      while(temp.next != sp){
+          temp=temp.next;
+      }
+      temp.next=null;
+      return head;
     }
 
     // leetcode 21 ===================================================== 
