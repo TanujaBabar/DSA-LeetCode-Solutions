@@ -34,7 +34,7 @@ class Solution {
 
     public boolean findRotation(int[][] mat, int[][] target) {
 
-// at max we can rotate our matrix 4 times.....
+// at max we can rotate our matrix 4 times..... 90,180,270,360
        int n = mat.length;
        int m = mat[0].length;
        for(int c=0;c<4;c++){
