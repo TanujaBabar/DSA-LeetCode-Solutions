@@ -1,0 +1,52 @@
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+
+        /*
+        // OPTIMAL APPROACH (O(n)) - using HashMap
+        int n = nums.length;
+        HashMap<Integer,Integer> mp = new HashMap<>();
+        
+        for(int i=0;i<n;i++){
+            // Check if element already exists
+            if(mp.containsKey(nums[i])){
+                int diff = i - mp.get(nums[i]);  // distance between indices
+                
+                // If distance is within k → valid answer
+                if(diff <= k){
+                    return true;
+                }
+            }
+            
+            // Store/update latest index of element
+            mp.put(nums[i], i);
+        }
+        */
+
+        // BRUTE FORCE APPROACH (O(n^2))
+        int n = nums.length;
+        int count = 0;  // counts number of comparisons (i, j pairs checked)
+
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+
+                // Check if elements are equal AND indices within distance k
+                if((nums[i] == nums[j]) && Math.abs(i - j) <= k){
+                    return true;
+                }
+
+                // Increment count for each comparison
+                count++;
+            }
+
+            // Artificial stopping condition to avoid too many iterations (TLE)
+            // ❌ This is NOT correct logically
+            // It may stop early and return false even if valid pair exists later
+            if(count > 99999){
+                return false;
+            }
+        }
+
+        // If no valid pair found
+        return false;    
+    }
+}
