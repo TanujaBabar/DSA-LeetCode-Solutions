@@ -1,0 +1,92 @@
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+
+        // USING HASHMAP APPROACH
+
+        int n = nums1.length;
+        int m = nums2.length;
+
+        // Stores frequency of elements from nums1
+        HashMap<Integer, Integer> mp = new HashMap<>();
+
+        // Stores common elements
+        ArrayList<Integer> list = new ArrayList<>();
+
+        // Count frequency of each element in nums1
+        for (int i = 0; i < n; i++) {
+            mp.put(nums1[i], mp.getOrDefault(nums1[i], 0) + 1);
+        }
+
+        // Traverse nums2 and check common elements
+        for (int num : nums2) {
+
+            // If element exists and frequency > 0
+            if (mp.containsKey(num) && mp.get(num) > 0) {
+
+                // Add element to answer list
+                list.add(num);
+
+                // Decrease frequency after using element
+                mp.put(num, mp.get(num) - 1);
+            }
+        }
+
+        // Convert ArrayList to int[]
+        int[] ans = new int[list.size()];
+
+        for (int k = 0; k < list.size(); k++) {
+            ans[k] = list.get(k);
+        }
+
+        return ans;
+
+
+
+
+
+        /*
+        // TWO POINTER APPROACH
+
+        int n = nums1.length;
+        int m = nums2.length;
+
+        int i = 0;
+        int j = 0;
+
+        ArrayList<Integer> list = new ArrayList<>();
+
+        // Sort both arrays
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+
+        // Traverse both arrays
+        while (i < n && j < m) {
+
+            // Common element found
+            if (nums1[i] == nums2[j]) {
+
+                list.add(nums1[i]);
+                i++;
+                j++;
+
+            }
+            // Move smaller element pointer
+            else if (nums1[i] < nums2[j]) {
+                i++;
+            }
+            else {
+                j++;
+            }
+        }
+
+        // Convert ArrayList to int[]
+        int[] ans = new int[list.size()];
+
+        for (int k = 0; k < list.size(); k++) {
+            ans[k] = list.get(k);
+        }
+
+        return ans;
+        */
+    }
+}
