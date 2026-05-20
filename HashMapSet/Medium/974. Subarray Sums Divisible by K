@@ -1,0 +1,125 @@
+class Solution {
+    public int subarraysDivByK(int[] nums, int k) {
+
+        /*
+         * BRUTE FORCE APPROACH
+         * --------------------
+         * Time Complexity  : O(n^2)
+         * Space Complexity : O(1)
+         *
+         * Logic:
+         * - Generate all possible subarrays.
+         * - Find sum of each subarray.
+         * - If sum % k == 0, increase count.
+         */
+
+        int n = nums.length;
+
+        int count = 0;
+
+        // Start index of subarray
+        for (int i = 0; i < n; i++) {
+
+            int sum = 0;
+
+            // End index of subarray
+            for (int j = i; j < n; j++) {
+
+                // Add current element to subarray sum
+                sum += nums[j];
+
+                // Check if subarray sum is divisible by k
+                if (sum % k == 0) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+}
+
+
+
+
+
+
+
+
+
+class Solution {
+    public int subarraysDivByK(int[] nums, int k) {
+
+        /*
+         * APPROACH : Prefix Sum + HashMap
+         * --------------------------------
+         * Time Complexity  : O(n)
+         * Space Complexity : O(k) in worst case
+         *
+         * Logic:
+         * - If two prefix sums have the same remainder when divided by k,
+         *   then the subarray between them has sum divisible by k.
+         *
+         * Example:
+         * prefixSum1 % k == prefixSum2 % k
+         * => (prefixSum2 - prefixSum1) % k == 0
+         *
+         * So, for every remainder:
+         * - If we have seen it before,
+         *   then there exists a subarray divisible by k.
+         */
+
+        // Stores remainder frequency
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        /*
+         * Initialize with remainder 0 having frequency 1
+         * because a prefix sum itself may be divisible by k.
+         */
+        map.put(0, 1);
+
+        int sum = 0;   // Running prefix sum
+        int rem = 0;   // Current remainder
+        int ans = 0;   // Final answer
+
+        for (int i = 0; i < nums.length; i++) {
+
+            // Update prefix sum
+            sum += nums[i];
+
+            // Find remainder
+            rem = sum % k;
+
+            /*
+             * Handle negative remainder case
+             * Example:
+             * -1 % 5 = -1 in Java
+             * Convert it into positive remainder
+             */
+            if (rem < 0) {
+                rem = rem + k;
+            }
+
+            /*
+             * If remainder already exists,
+             * then previous prefixes with same remainder
+             * form valid subarrays.
+             */
+            if (map.containsKey(rem)) {
+
+                // Add frequency to answer
+                ans += map.get(rem);
+
+                // Increase frequency of current remainder
+                map.put(rem, map.get(rem) + 1);
+
+            } else {
+
+                // First occurrence of this remainder
+                map.put(rem, 1);
+            }
+        }
+
+        return ans;
+    }
+}
