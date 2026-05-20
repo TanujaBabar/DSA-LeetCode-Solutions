@@ -1,0 +1,138 @@
+class Solution {
+    public int[] findThePrefixCommonArray(int[] A, int[] B) {
+
+        /*
+         * APPROACH 1 : Brute Force using two boolean arrays
+         * -------------------------------------------------
+         * Time Complexity  : O(n^2)
+         * Space Complexity : O(n)
+         *
+         * Logic:
+         * - Mark elements present till index i in both arrays.
+         * - Count how many numbers are present in both prefixes.
+         */
+
+        /*
+        int n = A.length;
+        int[] ans = new int[n];
+
+        boolean[] is_present_A = new boolean[n + 1];
+        boolean[] is_present_B = new boolean[n + 1];
+
+        for (int i = 0; i < n; i++) {
+
+            // Mark current elements as visited
+            is_present_A[A[i]] = true;
+            is_present_B[B[i]] = true;
+
+            int count = 0;
+
+            // Count common elements in both prefixes
+            for (int j = 1; j <= n; j++) {
+                if (is_present_A[j] && is_present_B[j]) {
+                    count++;
+                }
+            }
+
+            ans[i] = count;
+        }
+
+        return ans;
+        */
+
+
+        /*
+         * APPROACH 2 : Optimal using HashMap
+         * ----------------------------------
+         * Time Complexity  : O(n)
+         * Space Complexity : O(n)
+         *
+         * Logic:
+         * - Store frequency of elements from both arrays.
+         * - Whenever frequency becomes 2,
+         *   it means the element appeared in both arrays.
+         */
+
+        /*
+        int n = A.length;
+        int[] ans = new int[n];
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        int count = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            // Add element from A
+            map.put(A[i], map.getOrDefault(A[i], 0) + 1);
+
+            // If frequency becomes 2,
+            // element is common in both prefixes
+            if (map.get(A[i]) == 2) {
+                count++;
+            }
+
+            // Add element from B
+            map.put(B[i], map.getOrDefault(B[i], 0) + 1);
+
+            // Check again for common element
+            if (map.get(B[i]) == 2) {
+                count++;
+            }
+
+            ans[i] = count;
+        }
+
+        return ans;
+        */
+
+
+        /*
+         * APPROACH 3 : Optimal using Frequency Array
+         * -------------------------------------------
+         * Time Complexity  : O(n)
+         * Space Complexity : O(n)
+         *
+         * Logic:
+         * - Since elements are from 1 to n,
+         *   we can use a frequency array instead of HashMap.
+         * - Increase frequency for elements from A and B.
+         * - When frequency becomes exactly 2,
+         *   that element is present in both prefixes.
+         */
+
+        int n = A.length;
+
+        int[] ans = new int[n];
+
+        // Frequency array to track occurrences
+        int[] freq = new int[n + 1];
+
+        int common = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            // Process element from A
+            freq[A[i]]++;
+
+            // If frequency becomes 2,
+            // element is now common
+            if (freq[A[i]] == 2) {
+                common++;
+            }
+
+            // Process element from B
+            freq[B[i]]++;
+
+            // Again check if it became common
+            if (freq[B[i]] == 2) {
+                common++;
+            }
+
+            // Store prefix common count
+            ans[i] = common;
+        }
+
+        return ans;
+    }
+}
