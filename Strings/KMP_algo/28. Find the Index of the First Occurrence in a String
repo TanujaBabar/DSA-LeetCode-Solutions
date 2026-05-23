@@ -1,0 +1,111 @@
+class Solution {
+    public int strStr(String haystack, String needle) {
+
+        /*
+         KMP (Knuth Morris Pratt) Algorithm
+
+         Goal:
+         Find first occurrence of needle in haystack.
+
+         Time Complexity: O(n + m)
+         n = haystack length
+         m = needle length
+        */
+
+        // ---------------- BUILD LPS ARRAY ----------------
+
+        int m = needle.length();
+
+        // lps[i] = longest proper prefix
+        // which is also suffix for substring needle[0...i]
+        int[] lps = new int[m];
+
+        int i = 1;
+        int len = 0;
+
+        // Build LPS array
+        while (i < m) {
+
+            // Characters match
+            if (needle.charAt(i) == needle.charAt(len)) {
+
+                len++;
+
+                lps[i] = len;
+
+                i++;
+
+            } else {
+
+                // Mismatch after some matches
+                if (len != 0) {
+
+                    // Move len to previous valid prefix
+                    len = lps[len - 1];
+
+                } else {
+
+                    // No prefix-suffix possible
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+
+        /*
+         Example:
+         needle = "ababaca"
+
+         lps = [0,0,1,2,3,0,1]
+        */
+
+        // ---------------- KMP SEARCH ----------------
+
+        int n = haystack.length();
+
+        // i -> pointer for haystack
+        // j -> pointer for needle
+        i = 0;
+        int j = 0;
+
+        /*
+         Continue while remaining characters in haystack
+         are enough to match remaining needle characters
+        */
+        while ((n - i) >= (m - j)) {
+
+            // Characters match
+            if (haystack.charAt(i) == needle.charAt(j)) {
+                i++;
+                j++;
+            }
+
+            // Entire needle matched
+            if (j == m) {
+
+                // Starting index of match
+                return i - j;
+            }
+
+            // Mismatch occurs
+            else if (i < n &&
+                     haystack.charAt(i) != needle.charAt(j)) {
+
+                // Use LPS to avoid rechecking characters
+                if (j != 0) {
+
+                    // Shift pattern using previous LPS
+                    j = lps[j - 1];
+
+                } else {
+
+                    // No partial match exists
+                    i++;
+                }
+            }
+        }
+
+        // Needle not found
+        return -1;
+    }
+}
