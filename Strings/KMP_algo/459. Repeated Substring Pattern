@@ -1,0 +1,73 @@
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+
+        int m = s.length();
+
+        // i -> current index
+        // len -> length of current longest prefix suffix
+        int i = 1;
+        int len = 0;
+
+        // LPS array
+        // lps[i] = longest proper prefix which is also suffix
+        // for substring s[0...i]
+        int[] lps = new int[m];
+
+        // Build LPS array using KMP preprocessing
+        while (i < m) {
+
+            // Characters match
+            if (s.charAt(i) == s.charAt(len)) {
+
+                len++;
+
+                // Store current LPS value
+                lps[i] = len;
+
+                i++;
+
+            } else {
+
+                // Mismatch occurs
+
+                // Try smaller previous prefix
+                if (len != 0) {
+
+                    len = lps[len - 1];
+
+                } else {
+
+                    // No prefix-suffix match possible
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+
+        /*
+         Example:
+         s = "ababab"
+
+         lps = [0,0,1,2,3,4]
+
+         longest prefix which is also suffix = 4
+         repeating pattern length = m - 4 = 2
+
+         substring = "ab"
+
+         Since:
+         6 % 2 == 0
+
+         "ab" repeats completely to form string.
+        */
+
+        // Longest prefix which is also suffix
+        int longestSufixPrefix = lps[m - 1];
+
+        // String is repeated if:
+        // 1. Some prefix-suffix exists
+        // 2. Remaining length divides complete string exactly
+        return longestSufixPrefix > 0 &&
+               m % (m - longestSufixPrefix) == 0;
+    }
+}
