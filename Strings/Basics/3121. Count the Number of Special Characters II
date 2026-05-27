@@ -1,0 +1,37 @@
+You are given a string word. A letter c is called special if it appears both in lowercase and uppercase in word, and every lowercase occurrence of c appears before the first uppercase occurrence of c.
+
+Return the number of special letters in word.
+
+ 
+
+Example 1:
+
+Input: word = "aaAbcBC"
+
+Output: 3
+
+Explanation:
+
+The special characters are 'a', 'b', and 'c'.
+
+class Solution {
+    public int numberOfSpecialChars(String word) {
+        Set<Character> s = new HashSet<>();
+        for(int i=0;i<word.length();i++){
+            s.add(word.charAt(i));
+        }
+        int n = s.size();
+        int count =0;
+        for(char ch: s){
+            if(Character.isLowerCase(ch)){
+                char upper = (char)(ch - 32);
+                int firstOccurance = word.indexOf(ch);
+                int lastOccurance = word.lastIndexOf(ch);
+                if(s.contains(upper) && word.indexOf(upper) > lastOccurance){
+                    count++;
+                }    
+            }
+        }
+    return count;    
+    }
+}
