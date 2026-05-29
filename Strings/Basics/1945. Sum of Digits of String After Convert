@@ -1,0 +1,48 @@
+Input: s = "leetcode", k = 2
+
+Output: 6
+
+Explanation:
+
+The operations are as follows:
+- Convert: "leetcode" ➝ "(12)(5)(5)(20)(3)(15)(4)(5)" ➝ "12552031545" ➝ 12552031545
+- Transform #1: 12552031545 ➝ 1 + 2 + 5 + 5 + 2 + 0 + 3 + 1 + 5 + 4 + 5 ➝ 33
+- Transform #2: 33 ➝ 3 + 3 ➝ 6
+Thus the resulting integer is 6.
+
+
+class Solution {
+    public int getLucky(String s, int k) {
+        
+        // Convert each character to its alphabet position
+        // a -> 1, b -> 2, ..., z -> 26
+        StringBuilder sb = new StringBuilder();
+        for (char ch : s.toCharArray()) {
+            int position = ch - 'a' + 1;
+            sb.append(position);
+        }
+
+        // Store the converted number as a string
+        String str = sb.toString();
+        int sum = 0;
+
+        // Perform the digit-sum transformation k times
+        while (k > 0) {
+            sum = 0; // Reset sum for the current transformation
+
+            // Calculate the sum of digits
+            for (char ch : str.toCharArray()) {
+                int digit = ch - '0';
+                sum += digit;
+            }
+
+            // Convert the result back to string for the next iteration
+            str = String.valueOf(sum);
+
+            k--;
+        }
+
+        // Return the final transformed value
+        return sum;
+    }
+}
