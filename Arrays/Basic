@@ -55,3 +55,40 @@ class Solution {
     return -1;
     }
 }
+
+
+645. Set Mismatch
+
+Example 1:
+
+Input: nums = [1,2,2,4]
+Output: [2,3]
+Example 2:
+
+Input: nums = [1,1]
+Output: [1,2]
+class Solution {
+    public int[] findErrorNums(int[] nums) {
+        int n = nums.length;
+        int duplicate = 0;
+        int sum =0;
+        int[] ans = new int[2];
+        boolean[] seen = new boolean[n+1];
+        for(int i=0;i<n;i++){
+            if(seen[nums[i]]){
+               duplicate = nums[i];
+            }
+            seen[nums[i]] = true;
+            sum += nums[i];
+        }
+
+        int total = n*(n+1)/2;
+        int sumWithoutDup = sum - duplicate;
+        int missing = total - sumWithoutDup;
+
+        ans[0] = duplicate;
+        ans[1] = missing;
+
+    return ans;    
+    }
+}
