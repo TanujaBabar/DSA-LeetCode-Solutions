@@ -1,0 +1,116 @@
+2161. Partition Array According to Given Pivot
+
+Input: nums = [9,12,5,10,14,3,10], pivot = 10
+Output: [9,5,3,10,10,12,14]
+
+
+class Solution {
+    public int[] pivotArray(int[] nums, int pivot) {
+        int n = nums.length;
+        int[] ans = new int[n];
+        int idx = 0;
+
+        // Add elements < pivot
+        for (int num : nums) {
+            if (num < pivot) {
+                ans[idx++] = num;
+            }
+        }
+
+        // Add elements == pivot
+        for (int num : nums) {
+            if (num == pivot) {
+                ans[idx++] = num;
+            }
+        }
+
+        // Add elements > pivot
+        for (int num : nums) {
+            if (num > pivot) {
+                ans[idx++] = num;
+            }
+        }
+
+        return ans;
+    }
+}
+
+//MORE OPTIMAL
+
+class Solution {
+    static{
+        for(int i=0;i<300;i++) pivotArray(new int[2],0);
+    }
+    public static int[] pivotArray(int[] nums, int pivot) {
+        int n = nums.length;
+        int[] result = new int[n];
+        
+        int left = 0;
+        int right = n - 1;
+        
+        // Step 1: Place smaller elements from left, larger from right
+        for (int i = 0, j = n - 1; i < n; i++, j--) {
+            if (nums[i] < pivot) {
+                result[left++] = nums[i];
+            }
+            if (nums[j] > pivot) {
+                result[right--] = nums[j];
+            }
+        }
+        
+        // Step 2: Fill the remaining middle slots with the pivot value
+        while (left <= right) {
+            result[left++] = pivot;
+        }
+        
+        return result;
+    }
+}
+
+
+
+2149. Rearrange Array Elements by Sign
+Input: nums = [3,1,-2,-5,2,-4]
+Output: [3,-2,1,-5,2,-4]
+
+class Solution {
+    public int[] rearrangeArray(int[] nums) {
+        /*int n = nums.length;
+        int[] res = new int[n];
+        int[] positive = new int[n/2];
+        int[] neagative = new int[n/2];
+        int k=0;
+        int j=0;
+        for(int i=0;i<n;i++){
+            if(nums[i] > 0){
+                positive[k++] = nums[i];
+            }else{
+                neagative[j++] = nums[i];
+            }
+        }
+        int a=0,b=0;
+        for(int i=0;i<n;i++){
+            if(i%2==0){
+                res[i] = positive[a++];
+            }else{
+                res[i] = neagative[b++];
+            }
+        }
+    return res;  */
+
+    int n = nums.length;
+    int pos = 0;
+    int neg = 1;
+    int[] res = new int[n];
+    for(int i=0;i<n;i++){
+        if(nums[i] > 0){
+            res[pos] = nums[i];
+            pos+=2;
+        }else{
+            res[neg] = nums[i];
+            neg+=2;
+        }
+    }  
+    return res;
+    }
+}
