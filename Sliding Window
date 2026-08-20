@@ -1,0 +1,71 @@
+76. Minimum Window Substring
+
+Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates)
+is included in the window. If there is no such substring, return the empty string "".
+
+The testcases will be generated such that the answer is unique.
+
+ 
+
+Example 1:
+
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+
+
+class Solution {
+
+    public boolean check(int[] tfreq, int[] sfreq) {
+        for (int i = 65; i < 123; i++) {
+            if (sfreq[i] < tfreq[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String minWindow(String s, String t) {
+
+        int n = s.length();
+
+        int[] tfreq = new int[123];
+
+        for (int i = 0; i < t.length(); i++) {
+            tfreq[t.charAt(i)]++;
+        }
+
+        int start = 0;
+        int end = 0;
+
+        int[] sfreq = new int[123];
+
+        int ans = Integer.MAX_VALUE;
+        int ansstart = -1;
+        int ansend = -1;
+
+        while (end < n) {
+
+            sfreq[s.charAt(end)]++;
+            end++;
+
+            while (start < end && check(tfreq, sfreq)) {
+
+                if (end - start < ans) {
+                    ans = end - start;
+                    ansstart = start;
+                    ansend = end;
+                }
+
+                sfreq[s.charAt(start)]--;
+                start++;
+            }
+        }
+
+        if (ans == Integer.MAX_VALUE) {
+            return "";
+        }
+
+        return s.substring(ansstart, ansend);
+    }
+}
