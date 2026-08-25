@@ -51,3 +51,101 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+2115. Find All Possible Recipes from Given Supplies
+
+Example 1:
+
+Input: recipes = ["bread"], ingredients = [["yeast","flour"]], supplies = ["yeast","flour","corn"]
+Output: ["bread"]
+Explanation:
+We can create "bread" since we have the ingredients "yeast" and "flour".
+Example 2:
+
+Input: recipes = ["bread","sandwich"], ingredients = [["yeast","flour"],["bread","meat"]], supplies = ["yeast","flour","meat"]
+Output: ["bread","sandwich"]
+Explanation:
+We can create "bread" since we have the ingredients "yeast" and "flour".
+We can create "sandwich" since we have the ingredient "meat" and can create the ingredient "bread".
+Example 3:
+
+Input: recipes = ["bread","sandwich","burger"], ingredients = [["yeast","flour"],["bread","meat"],["sandwich","meat","bread"]], supplies = ["yeast","flour","meat"]
+Output: ["bread","sandwich","burger"]
+Explanation:
+We can create "bread" since we have the ingredients "yeast" and "flour".
+We can create "sandwich" since we have the ingredient "meat" and can create the ingredient "bread".
+We can create "burger" since we have the ingredient "meat" and can create the ingredients "bread" and "sandwich".
+
+
+class Solution {
+    public List<String> findAllRecipes(
+        String[] recipes,
+        List<List<String>> ingredients,
+        String[] supplies) {
+
+        List<String> ans = new ArrayList<>();
+
+        // Store all initially available supplies
+        HashSet<String> sup = new HashSet<>();
+
+        for (String ele : supplies) {
+            sup.add(ele);
+        }
+
+        // Keep checking recipes until no new recipe can be made
+        boolean changed = true;
+
+        while (changed) {
+
+            // Assume no new recipe can be made in this round
+            changed = false;
+
+            for (int i = 0; i < recipes.length; i++) {
+
+                String rep = recipes[i];
+
+                // If this recipe is already made, skip it
+                if (sup.contains(rep)) {
+                    continue;
+                }
+
+                // Assume we can make the recipe
+                boolean canmake = true;
+
+                // Check every ingredient of the current recipe
+                for (int j = 0; j < ingredients.get(i).size(); j++) {
+
+                    List<String> list = ingredients.get(i);
+
+                    // If any ingredient is unavailable,
+                    // we cannot make this recipe
+                    if (!sup.contains(list.get(j))) {
+                        canmake = false;
+                        break;
+                    }
+                }
+
+                // If all ingredients are available
+                if (canmake) {
+
+                    // Add the recipe to our answer
+                    ans.add(rep);
+
+                    // The newly made recipe can now be used
+                    // as an ingredient for other recipes
+                    sup.add(rep);
+
+                    // A new recipe was made, so check again
+                    changed = true;
+                }
+            }
+        }
+
+        return ans;
+    }
+}
